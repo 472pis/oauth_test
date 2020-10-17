@@ -9,9 +9,10 @@
     function init() {
   gapi.load('auth2', function() {
     /* Ready. Make a call to gapi.auth2.init or some other API */
-      var goauth = gapi.auth2.init({
+      var GoogleAuth = gapi.auth2.init({
           client_id: '473213626983-s9u3clunkeajs8g09b4ucp9corp0538b.apps.googleusercontent.com'
-      });
+      })
+      
       GoogleAuth.then(function(){
           console.log('success')
       },function(){
