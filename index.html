@@ -6,23 +6,47 @@
     <title>OAUTH TEST PAGE</title>
 </head>
 <script>
+    function checkLoginStatus(){
+        var loginBtn = document.querySelector("#loginBtn");
+          if(GoogleAuth.isSignedIn.get()){
+              console.log('login');
+              loginBtn.value = 'Logout';
+          }else{
+              console.log('logout');
+              loginBtn.value = 'Login';
+          }
+    }
     function init() {
   gapi.load('auth2', function() {
     /* Ready. Make a call to gapi.auth2.init or some other API */
-      var GoogleAuth = gapi.auth2.init({
+      window.GoogleAuth = gapi.auth2.init({
           client_id: '473213626983-s9u3clunkeajs8g09b4ucp9corp0538b.apps.googleusercontent.com'
-      })
-      
+      });
       GoogleAuth.then(function(){
-          console.log('success')
+          console.log('success');
+          checkLoginStatus();
+          
       },function(){
           console.log('fail')
       });
   });
 }
+    
 </script>
 <body>
     <h1>HELLO WORLD</h1>
+    <input type="button" id = "loginBtn" value="Checking..." onclick = "
+    if(this.value === 'Login'){//로그인 되지 않은 상태
+        GoogleAuth.signIn().then(function(){
+            console.log('signin()');
+            checkLoginStatus();
+        });
+    } else {
+        GoogleAuth.signOut().then(function(){
+            console.log('signout()');
+            checkLoginStatus();
+        });
+    }">
     <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </body>
 </html>
