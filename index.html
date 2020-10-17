@@ -7,10 +7,13 @@
 </head>
 <script>
     function checkLoginStatus(){
+        var nameTxt = document.querySelector("#name");
         var loginBtn = document.querySelector("#loginBtn");
           if(GoogleAuth.isSignedIn.get()){
               console.log('login');
               loginBtn.value = 'Logout';
+              var profile = GoogleAuth.currentUser.get().getBasicProfile();
+              nameTxt.innerHTML = '<img src="'+profile.getImageUrl()+'" width="50px" height="50px"><br>welcome <strong>'+profile.getName()+'<strong>';
           }else{
               console.log('logout');
               loginBtn.value = 'Login';
@@ -35,6 +38,9 @@
 </script>
 <body>
     <h1>HELLO WORLD</h1>
+    <span id = "name">
+        
+    </span>
     <input type="button" id = "loginBtn" value="Checking..." onclick = "
     if(this.value === 'Login'){//로그인 되지 않은 상태
         GoogleAuth.signIn().then(function(){
